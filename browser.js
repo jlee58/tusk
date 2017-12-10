@@ -65,6 +65,14 @@ ipc.on('exit-focus-mode', () => {
   document.querySelector('#gwt-debug-NoteAttributes-doneButton').click();
 });
 
+function setFontColor(color){
+  //inject Javascript to set font color
+    var content = 'var frame = document.getElementById("en-common-editor-iframe");\
+      if (frame){\
+      frame.contentWindow.document.getElementById("en-note").style.color = "' + color + '"\}';
+    webFrame.executeJavaScript(content);
+}
+
 function untoggleTheme(themeName, activateFunction) {
   // Deactivate theme status if it is not already deactivated
   switch (config.get(themeName)) {
@@ -80,6 +88,7 @@ function untoggleTheme(themeName, activateFunction) {
 
 function darkMode() {
   document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
+  config.get('darkMode')?setFontColor('#DDD'):setFontColor('#000');
 }
 
 function untoggleDark() {
@@ -99,6 +108,7 @@ ipc.on('toggle-dark-mode', () => {
 
 function blackMode() {
   document.documentElement.classList.toggle('black-mode', config.get('blackMode'));
+  config.get('blackMode')?setFontColor('#DDD'):setFontColor('#000');
 }
 
 function untoggleBlack() {
@@ -583,3 +593,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.style.backgroundColor = '#212121';
   }
 });
+
